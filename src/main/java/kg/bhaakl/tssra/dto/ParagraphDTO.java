@@ -1,17 +1,13 @@
 package kg.bhaakl.tssra.dto;
 
-import jakarta.persistence.Column;
-import kg.bhaakl.tssra.models.Topic;
+import lombok.Getter;
+import lombok.Setter;
 
+import javax.persistence.Column;
+
+@Getter
+@Setter
 public class ParagraphDTO {
     @Column(name = "p")
     private String p;
-
-    public String getP() {
-        return p;
-    }
-
-    public void setP(String p) {
-        this.p = p;
-    }
 }

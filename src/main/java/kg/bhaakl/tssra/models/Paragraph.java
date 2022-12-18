@@ -1,7 +1,14 @@
 package kg.bhaakl.tssra.models;
 
-import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import javax.persistence.*;
+
+@Setter
+@NoArgsConstructor
+@Getter
 @Entity
 @Table(name = "paragraphs")
 public class Paragraph {
@@ -15,28 +22,4 @@ public class Paragraph {
 
     @Column(name = "topic_id")
     private Integer topicId;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getP() {
-        return p;
-    }
-
-    public void setP(String p) {
-        this.p = p;
-    }
-
-    public Integer getTopicId() {
-        return topicId;
-    }
-
-    public void setTopicId(Integer topicId) {
-        this.topicId = topicId;
-    }
 }

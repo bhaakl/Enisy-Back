@@ -1,19 +1,17 @@
 package kg.bhaakl.tssra.dto;
 
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+
 import java.util.List;
 
+
+@Getter
+@Setter
+@RequiredArgsConstructor
 public class TopicsResponse {
+    @NonNull
     private List<TopicDTO> topics;
-
-    public TopicsResponse(List<TopicDTO> topics) {
-        this.topics = topics;
-    }
-
-    public List<TopicDTO> getTopics() {
-        return topics;
-    }
-
-    public void setTopics(List<TopicDTO> topics) {
-        this.topics = topics;
-    }
 }

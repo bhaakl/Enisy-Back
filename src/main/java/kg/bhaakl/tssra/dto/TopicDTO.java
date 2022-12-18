@@ -1,11 +1,17 @@
 package kg.bhaakl.tssra.dto;
 
-import jakarta.persistence.*;
-import kg.bhaakl.tssra.models.Paragraph;
+import lombok.Getter;
+import lombok.Setter;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Date;
 import java.util.List;
 
+@Getter
+@Setter
 public class TopicDTO {
     @Id
     @Column(name = "id")
@@ -22,44 +28,4 @@ public class TopicDTO {
     private String pic;
 
     private List<ParagraphDTO> paragraphs;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public String getPic() {
-        return pic;
-    }
-
-    public void setPic(String pic) {
-        this.pic = pic;
-    }
-
-    public List<ParagraphDTO> getParagraphs() {
-        return paragraphs;
-    }
-
-    public void setParagraphs(List<ParagraphDTO> paragraphs) {
-        this.paragraphs = paragraphs;
-    }
 }
