@@ -7,7 +7,6 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 @Getter
 @Setter
@@ -29,11 +28,4 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @OneToMany
-    @JoinTable(
-            name="roles",
-            joinColumns = @JoinColumn( name="user_id"),
-            inverseJoinColumns = @JoinColumn( name="id")
-    )
-    private List<Roles> roles;
 }

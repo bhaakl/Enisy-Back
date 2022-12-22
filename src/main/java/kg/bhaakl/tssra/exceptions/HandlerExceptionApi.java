@@ -1,7 +1,6 @@
 package kg.bhaakl.tssra.exceptions;
 
 import kg.bhaakl.tssra.util.UserErrorResponse;
-import kg.bhaakl.tssra.util.UserException;
 import org.modelmapper.spi.ErrorMessage;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
@@ -11,6 +10,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+
+import javax.persistence.EntityNotFoundException;
 
 @RestControllerAdvice
 public class HandlerExceptionApi {
@@ -29,8 +30,8 @@ public class HandlerExceptionApi {
                 .body(new ErrorMessage(e.getMessage()));
     }
 
-    @ExceptionHandler(UsernameNotFoundException.class)
-    public ResponseEntity<UserErrorResponse> userNotFoundException(UsernameNotFoundException e) {
+    @ExceptionHandler({UsernameNotFoundException.class, EntityNotFoundException.class})
+    public ResponseEntity<UserErrorResponse> userNotFoundException(RuntimeException e) {
         UserErrorResponse userError = new UserErrorResponse(e.getMessage(), System.currentTimeMillis());
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
@@ -46,10 +47,10 @@ public class HandlerExceptionApi {
     }
 
     @ExceptionHandler(BadCredentialsException.class)
-    public ResponseEntity<UserErrorResponse> userErrorException(BadCredentialsException e) {
+    public ResponseEntity<UserErrorResponse> userBadCredentialErrorException(BadCredentialsException e) {
         UserErrorResponse userError = new UserErrorResponse(e.getMessage(), System.currentTimeMillis());
         return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
+                .status(HttpStatus.UNAUTHORIZED)
                 .body(userError);
     }
 

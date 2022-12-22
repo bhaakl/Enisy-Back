@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = {"http://localhost:8081"})
+//@CrossOrigin(origins = {"http://localhost:8081"})
 @RestController
 @RequestMapping("/topics")
 public class TopicController {

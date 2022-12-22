@@ -1,5 +1,6 @@
 package kg.bhaakl.tssra.util;
 
+import kg.bhaakl.tssra.exceptions.UserException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 

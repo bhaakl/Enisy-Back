@@ -3,31 +3,28 @@ package kg.bhaakl.tssra.services;
 import kg.bhaakl.tssra.models.Role;
 import kg.bhaakl.tssra.models.Roles;
 import kg.bhaakl.tssra.models.User;
-import kg.bhaakl.tssra.repositories.PeopleRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.Collections;
 
 @Service
+@RequiredArgsConstructor
 public class RegistrationService {
-
-    private final PeopleRepository peopleRepository;
+    private final UserService userService;
+    private final RoleService roleService;
     private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    public RegistrationService(PeopleRepository peopleRepository, PasswordEncoder passwordEncoder) {
-        this.peopleRepository = peopleRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
-
-    @Transactional
     public void register(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoles(new ArrayList<>(Collections.singleton(new Roles(Role.USER))));
-        peopleRepository.save(user);
+        userService.save(user);
+        final Roles roles1 = new Roles(Role.USER);
+        roles1.setUser(user);
+        final Roles roles2 = new Roles(Role.ADMIN);
+        roles2.setUser(user);
+        final Roles roles3 = new Roles(Role.GUEST);
+        roles3.setUser(user);
+        roleService.save(roles1);
+        roleService.save(roles2);
+        roleService.save(roles3);
     }
 }

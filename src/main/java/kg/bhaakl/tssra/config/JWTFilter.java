@@ -2,7 +2,7 @@ package kg.bhaakl.tssra.config;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import kg.bhaakl.tssra.security.JWTUtil;
-import kg.bhaakl.tssra.services.PersonDetailsService;
+import kg.bhaakl.tssra.services.USERDetailsService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,15 +15,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@Component
 public class JWTFilter extends OncePerRequestFilter {
 
     private final JWTUtil jwtUtil;
-    private final PersonDetailsService personDetailsService;
+    private final USERDetailsService USERDetailsService;
 
-    public JWTFilter(JWTUtil jwtUtil, PersonDetailsService personDetailsService) {
+    public JWTFilter(JWTUtil jwtUtil, USERDetailsService USERDetailsService) {
         this.jwtUtil = jwtUtil;
-        this.personDetailsService = personDetailsService;
+        this.USERDetailsService = USERDetailsService;
     }
 
     @Override
@@ -40,7 +39,7 @@ public class JWTFilter extends OncePerRequestFilter {
             } else {
                 try {
                     String username = jwtUtil.validateTokenAndRetrieveClaim(jwt);
-                    UserDetails userDetails = personDetailsService.loadUserByUsername(username);
+                    UserDetails userDetails = USERDetailsService.loadUserByUsername(username);
 
                     UsernamePasswordAuthenticationToken authToken =
                             new UsernamePasswordAuthenticationToken(userDetails,

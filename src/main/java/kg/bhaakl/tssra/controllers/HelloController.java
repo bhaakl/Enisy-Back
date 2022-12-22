@@ -1,21 +1,36 @@
 package kg.bhaakl.tssra.controllers;
 
-import kg.bhaakl.tssra.models.User;
-import kg.bhaakl.tssra.security.PersonDetails;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import kg.bhaakl.tssra.models.JwtAuthentication;
+import kg.bhaakl.tssra.services.AuthService;
+import kg.bhaakl.tssra.services.RoleService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/")
 public class HelloController {
-    @GetMapping("/showUserInfo")
-    @ResponseBody
-    public User showUserInfo() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        PersonDetails personDetails = (PersonDetails) authentication.getPrincipal();
+    @Autowired
+    private AuthService authService;
+    @Autowired
+    private RoleService roleService;
+    @GetMapping("showUserInfo")
+    @PreAuthorize("hasAuthority('ROLE_USER') || hasAuthority('ROLE_ADMIN')")
+    public ResponseEntity<String> showUserInfo() {
+        final JwtAuthentication authInfo = authService.getAuthInfo();
+        System.out.println("----------------------------");
+        System.out.println(authInfo.getRoles());
+        System.out.println("----------------------------");
+        return ResponseEntity.ok("Hello user " + authInfo.getPrincipal() + "!");
+    }
 
-        return personDetails.getPerson();
+    @GetMapping("admin")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public ResponseEntity<String> helloAdmin() {
+        final JwtAuthentication authInfo = authService.getAuthInfo();
+        return ResponseEntity.ok("Hello admin " + authInfo.getPrincipal() + "!");
     }
 }
