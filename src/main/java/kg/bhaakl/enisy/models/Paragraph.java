@@ -11,15 +11,11 @@ import javax.persistence.*;
 @Getter
 @Entity
 @Table(name = "paragraphs")
-public class Paragraph {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id;
+public class Paragraph extends BaseEntity {
 
     @Column(name = "p")
     private String p;
 
-    @Column(name = "topic_id")
-    private Integer topicId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Topic topic;
 }

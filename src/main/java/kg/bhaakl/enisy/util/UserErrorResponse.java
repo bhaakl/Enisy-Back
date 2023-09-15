@@ -1,13 +1,15 @@
 package kg.bhaakl.enisy.util;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserErrorResponse {
     private Boolean res;
     private List<String> errors = new ArrayList<>();

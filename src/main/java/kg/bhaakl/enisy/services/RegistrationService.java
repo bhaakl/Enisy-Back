@@ -19,12 +19,6 @@ public class RegistrationService {
         userService.save(user);
         final Roles roles1 = new Roles(Role.USER);
         roles1.setUser(user);
-        final Roles roles2 = new Roles(Role.ADMIN);
-        roles2.setUser(user);
-        final Roles roles3 = new Roles(Role.GUEST);
-        roles3.setUser(user);
         roleService.save(roles1);
-        roleService.save(roles2);
-        roleService.save(roles3);
     }
 }

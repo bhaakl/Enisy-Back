@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -14,11 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "Topic")
-public class Topic {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id;
+public class Topic extends BaseEntity {
 
     @Column(name = "title")
     private String title;
@@ -30,11 +26,29 @@ public class Topic {
     @Column(name = "picture")
     private String pic;
 
-    @OneToMany
-    @JoinTable(
-            name="paragraphs",
-            joinColumns = @JoinColumn( name="topic_id"),
-            inverseJoinColumns = @JoinColumn( name="id")
-    )
-    private List<Paragraph> paragraphs;
+    @OneToMany(mappedBy = "topic", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Paragraph> paragraphs = new ArrayList<>();
+
+    @OneToMany(mappedBy = "topic", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Image> images = new ArrayList<>();
+
+    public void addParagraph(Paragraph paragraph) {
+        paragraphs.add(paragraph);
+        paragraph.setTopic(this);
+    }
+
+    public void removeParagraph(Paragraph paragraph) {
+        paragraphs.remove(paragraph);
+        paragraph.setTopic(null);
+    }
+
+    public void addImages(Image image) {
+        images.add(image);
+        image.setTopic(this);
+    }
+
+    public void removeImages(Image image) {
+        images.remove(image);
+        image.setTopic(null);
+    }
 }

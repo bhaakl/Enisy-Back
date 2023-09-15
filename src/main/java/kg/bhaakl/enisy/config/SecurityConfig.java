@@ -35,7 +35,7 @@ public class SecurityConfig {
                 .and()
                 .authorizeHttpRequests(
                         authz -> authz
-                                .antMatchers("/auth/login", "/auth/registration", "/auth/token", "/auth/refresh",
+                                .antMatchers("/topics/**", "/auth/login", "/auth/registration", "/auth/token", "/auth/refresh",
                                         "/auth/check", "/auth/logout").permitAll()
                                 .anyRequest().authenticated()
                                 .and()

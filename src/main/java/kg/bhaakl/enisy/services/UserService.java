@@ -29,7 +29,7 @@ public class UserService {
         usersRepository.save(user);
     }
 
-    public User getRefById(int id) throws EntityNotFoundException{
+    public User getRefById(int id) throws EntityNotFoundException {
         return usersRepository.getReferenceById(id);
     }
 
